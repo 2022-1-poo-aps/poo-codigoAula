@@ -29,10 +29,28 @@ public class Tabuleiro {
         x e y têm valores de 0 ao tamanho do tabuleiro -1.
      **/
     public CasaTabuleiro getCasa(int x, int y){
-        if(x < 0 || y < 0 || x > tamTabuleiro || y > tamTabuleiro){
+        if(x < 0 || y < 0 || x >= tamTabuleiro || y >= tamTabuleiro){
             throw new IllegalArgumentException("x e y têm que ser maiores que zero e menores que "+tamTabuleiro);
         }
         return tabuleiro[x][y];
+    }
+
+    public void mover(Posicao origem, Posicao destino){
+        if(origem.x < 0 || 
+                origem.y < 0 || 
+                origem.x>= this.tamTabuleiro || 
+                origem.y >= this.tamTabuleiro){
+            throw new IllegalArgumentException("Posição origem fora dos limites do tabuleiro. " +
+                                               "TamTabuleiro"+this.tamTabuleiro+"- Origem:"+origem);
+        }
+        if(destino.x < 0 ||
+                destino.y < 0 ||
+                destino.x >=this.tamTabuleiro ||
+                destino.y >= this.tamTabuleiro){
+            throw new IllegalArgumentException("Posição destino fora dos limites do tabuleiro. " +
+                    "TamTabuleiro"+this.tamTabuleiro+"- Destino:"+destino);
+        }
+
     }
 
 
