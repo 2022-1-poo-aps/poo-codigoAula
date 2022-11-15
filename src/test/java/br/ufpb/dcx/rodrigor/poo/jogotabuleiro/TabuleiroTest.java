@@ -74,6 +74,11 @@ class TabuleiroTest {
         assertThrows(IllegalArgumentException.class, () ->
                 tabuleiro.mover(new Posicao(0,0), new Posicao(0,TAM_PADRAO)));
 
+        //origem não pode ser igual a destino:
+        assertThrows(IllegalArgumentException.class, () ->
+                tabuleiro.mover(new Posicao(0,0), new Posicao(0,0)));
+
+
     }
 
 

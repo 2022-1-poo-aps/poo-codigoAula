@@ -35,7 +35,11 @@ public class Tabuleiro {
         return tabuleiro[x][y];
     }
 
-    public void mover(Posicao origem, Posicao destino){
+    public CasaTabuleiro getCasa(Posicao posicao){
+        return this.getCasa(posicao.x,posicao.y);
+    }
+
+    public void mover(Posicao origem, Posicao destino) throws MovimentoInvalidoException {
         if(origem.x < 0 || 
                 origem.y < 0 || 
                 origem.x>= this.tamTabuleiro || 
@@ -50,6 +54,35 @@ public class Tabuleiro {
             throw new IllegalArgumentException("Posição destino fora dos limites do tabuleiro. " +
                     "TamTabuleiro"+this.tamTabuleiro+"- Destino:"+destino);
         }
+        if(origem.equals(destino)){
+            throw new IllegalArgumentException("Posição Origem = Destino!!: orig:"+origem+", dest:"+destino);
+        }
+
+        if(!this.getCasa(origem).temPeca()){
+            throw new MovimentoInvalidoException("Não existe peça na origem");
+        }
+
+        PecaDamas pecaOrigem= this.getCasa(origem).getPeca();
+
+        if (this.getCasa(destino).temPeca()){
+            throw new MovimentoInvalidoException("Movimento inválido");
+        }
+
+        if(destino.x == origem.x-1 && destino.y == origem.y+1){
+            movimentarPeca(origem,destino);
+            return;
+        }
+        if(destino.x == origem.x+1 && destino.y == origem.y+1){
+            movimentarPeca(origem,destino);
+            return;
+        }
+
+    }
+
+    public void movimentarPeca(Posicao origem, Posicao destino){
+        PecaDamas pecaOrigem = getCasa(origem).getPeca();
+        getCasa(destino).setPeca(pecaOrigem);
+        getCasa(origem).removerPeca();
 
     }
 
