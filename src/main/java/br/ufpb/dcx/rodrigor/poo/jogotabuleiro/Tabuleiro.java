@@ -90,4 +90,49 @@ public class Tabuleiro {
     public int getTamanho() {
         return this.tamTabuleiro;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer tabtxt = new StringBuffer();
+        // ┌ ┬ ┐ └ ┴ ┘ ┤ ├ │ ┼  ─
+        String hborder = "─".repeat(3);
+        String topBorder =    "  ┌"+(hborder+"┬").repeat(tabuleiro.length-1)+hborder+"┐\n";
+//        String midBorder =    " ├"+(hborder+"┼").repeat(tabuleiro.length-1)+hborder+"┤\n";
+        String bottonBorder = "  └"+(hborder+"┴").repeat(tabuleiro.length-1)+hborder+"┘\n";
+
+        boolean nextX, nextY;
+        // top numbers
+        tabtxt.append("  ");
+        for (int x = 0; x < tabuleiro.length; x++) {
+            tabtxt.append(String.format("  %s ", x));
+        }
+        tabtxt.append("\n");
+
+
+        tabtxt.append(topBorder);
+        for (int y = 0; y < tabuleiro.length; y++) {
+  //          nextY = y+1 < tabuleiro.length;
+            tabtxt.append(y+" ");
+            for (int x = 0; x < tabuleiro.length; x++) {
+                nextX = x+1 < tabuleiro.length;
+
+                CasaTabuleiro casa = tabuleiro[y][x];
+                String cortxt = casa.temPeca()?casa.getCor().equals(Cor.preto)?"█"+casa.getPeca()+"█":" "+casa.getPeca()+" ":casa.getCor().equals(Cor.preto)?"███":"   ";
+                tabtxt.append("│"+cortxt+(nextX?"":"│\n"));
+            }
+//            if(nextY){
+//                tabtxt.append(midBorder);
+//            }
+        }
+        tabtxt.append(bottonBorder);
+
+        return tabtxt.toString();
+    }
+
+
+
+    public static void main(String[] args) {
+        Tabuleiro t = new Tabuleiro();
+        System.out.println(t.toString());
+    }
 }

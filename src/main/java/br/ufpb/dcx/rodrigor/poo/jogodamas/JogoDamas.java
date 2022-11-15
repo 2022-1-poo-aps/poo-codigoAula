@@ -46,6 +46,7 @@ public class JogoDamas {
 
     public static void main(String[] args) {
         JogoDamas jogo = new JogoDamas();
+        jogo.fazerSetup();
         try {
             jogo.lerComandos();
         }catch (Exception exception){
@@ -55,6 +56,7 @@ public class JogoDamas {
     public void lerComandos(){
         String comando = "";
         do {
+            System.out.println(tabuleiro);
             comando = Texto.readString("digite o movimento, ou 'sair':\n");
             try {
                 String[] coordenadas = comando.split(" ");

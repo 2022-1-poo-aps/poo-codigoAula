@@ -13,5 +13,9 @@ public class PecaDamas {
     }
 
 
+    public String toString(){
+        return (cor.equals(Cor.preto)?"●":"◯");
+    }
+
 
 }
