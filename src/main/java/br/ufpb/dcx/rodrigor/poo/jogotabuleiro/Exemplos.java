@@ -2,7 +2,7 @@ package br.ufpb.dcx.rodrigor.poo.jogotabuleiro;
 
 public class Exemplos {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MovimentoInvalidoException {
 
         PecaDamas peca = new PecaDamas(Cor.preto);
 

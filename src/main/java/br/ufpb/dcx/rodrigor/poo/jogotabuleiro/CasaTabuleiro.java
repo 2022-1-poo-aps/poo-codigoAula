@@ -21,4 +21,12 @@ public class CasaTabuleiro {
     public void setPeca(PecaDamas peca) {
         this.peca = peca;
     }
+
+    public boolean temPeca(){
+        return this.peca != null;
+    }
+
+    public void removerPeca() {
+        this.peca = null;
+    }
 }
