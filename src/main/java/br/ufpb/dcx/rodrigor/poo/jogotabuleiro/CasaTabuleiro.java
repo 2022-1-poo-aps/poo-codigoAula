@@ -3,7 +3,7 @@ package br.ufpb.dcx.rodrigor.poo.jogotabuleiro;
 public class CasaTabuleiro {
 
     private Cor cor;
-    private PecaDamas peca;
+    private PecaTabuleiro peca;
 
     public CasaTabuleiro(Cor cor){
         this.cor = cor;
@@ -14,11 +14,11 @@ public class CasaTabuleiro {
         return cor;
     }
 
-    public PecaDamas getPeca() {
+    public PecaTabuleiro getPeca() {
         return peca;
     }
 
-    public void setPeca(PecaDamas peca) {
+    public void setPeca(PecaTabuleiro peca) {
         this.peca = peca;
     }
 
@@ -26,7 +26,7 @@ public class CasaTabuleiro {
         return this.peca != null;
     }
 
-    public boolean temPecaMesmaCor(PecaDamas peca){
+    public boolean temPecaMesmaCor(PecaTabuleiro peca){
         if(!temPeca()) return false;
         return getPeca().getCor().equals(peca.getCor());
     }
