@@ -18,30 +18,30 @@ public class JogoDamas {
     }
 
     public void fazerSetup(){
-        tabuleiro.getCasa(0,0).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(0,2).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(0,4).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(0,6).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(1,1).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(1,3).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(1,5).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(1,7).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(2,0).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(2,2).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(2,4).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(2,6).setPeca(new PecaDamas(Cor.preto));
-        tabuleiro.getCasa(5,1).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(5,3).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(5,5).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(5,7).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(6,0).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(6,2).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(6,4).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(6,6).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(7,1).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(7,3).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(7,5).setPeca(new PecaDamas(Cor.branco));
-        tabuleiro.getCasa(7,7).setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(0,0).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(0,2).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(0,4).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(0,6).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(1,1).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(1,3).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(1,5).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(1,7).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(2,0).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(2,2).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(2,4).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(2,6).get().setPeca(new PecaDamas(Cor.preto));
+        tabuleiro.getCasa(5,1).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(5,3).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(5,5).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(5,7).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(6,0).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(6,2).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(6,4).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(6,6).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(7,1).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(7,3).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(7,5).get().setPeca(new PecaDamas(Cor.branco));
+        tabuleiro.getCasa(7,7).get().setPeca(new PecaDamas(Cor.branco));
     }
 
     public static void main(String[] args) {

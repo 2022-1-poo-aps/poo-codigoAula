@@ -1,5 +1,11 @@
 package br.ufpb.dcx.rodrigor.poo.jogotabuleiro;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+
 public class Tabuleiro {
 
     private int tamTabuleiro;
@@ -28,61 +34,81 @@ public class Tabuleiro {
     /**
         x e y têm valores de 0 ao tamanho do tabuleiro -1.
      **/
-    public CasaTabuleiro getCasa(int x, int y){
+    public Optional<CasaTabuleiro> getCasa(int x, int y){
         if(x < 0 || y < 0 || x >= tamTabuleiro || y >= tamTabuleiro){
-            throw new IllegalArgumentException("x e y têm que ser maiores que zero e menores que "+tamTabuleiro);
+            return Optional.empty();
         }
-        return tabuleiro[x][y];
+        return Optional.of(tabuleiro[x][y]);
     }
 
-    public CasaTabuleiro getCasa(Posicao posicao){
+    public Optional<CasaTabuleiro> getCasa(Posicao posicao){
         return this.getCasa(posicao.x,posicao.y);
     }
 
     public void mover(Posicao origem, Posicao destino) throws MovimentoInvalidoException {
-        if(origem.x < 0 || 
+        // Início das verificações dos parâmetros do método
+        if(origem == null){
+            throw new IllegalArgumentException("origem é null! ");
+        }else if(destino == null){
+            throw new IllegalArgumentException("destino é null! ");
+        }else if(origem.x < 0 ||
                 origem.y < 0 || 
                 origem.x>= this.tamTabuleiro || 
                 origem.y >= this.tamTabuleiro){
             throw new IllegalArgumentException("Posição origem fora dos limites do tabuleiro. " +
                                                "TamTabuleiro"+this.tamTabuleiro+"- Origem:"+origem);
-        }
-        if(destino.x < 0 ||
+        } else if(destino.x < 0 ||
                 destino.y < 0 ||
                 destino.x >=this.tamTabuleiro ||
                 destino.y >= this.tamTabuleiro){
             throw new IllegalArgumentException("Posição destino fora dos limites do tabuleiro. " +
                     "TamTabuleiro"+this.tamTabuleiro+"- Destino:"+destino);
-        }
-        if(origem.equals(destino)){
+        } else if(origem.equals(destino)){
             throw new IllegalArgumentException("Posição Origem = Destino!!: orig:"+origem+", dest:"+destino);
-        }
-
-        if(!this.getCasa(origem).temPeca()){
+        } else if(!this.getCasa(origem).get().temPeca()){
             throw new MovimentoInvalidoException("Não existe peça na origem");
         }
 
-        PecaDamas pecaOrigem= this.getCasa(origem).getPeca();
+        PecaDamas pecaOrigem= this.getCasa(origem).get().getPeca();
 
-        if (this.getCasa(destino).temPeca()){
+        if (this.getCasa(destino).get().temPeca()){
             throw new MovimentoInvalidoException("Movimento inválido");
         }
+        // Fim das verificações dos parâmetros do método
 
-        if(destino.x == origem.x-1 && destino.y == origem.y+1){
-            movimentarPeca(origem,destino);
-            return;
-        }
-        if(destino.x == origem.x+1 && destino.y == origem.y+1){
-            movimentarPeca(origem,destino);
-            return;
-        }
 
+        // Checar movimento da peça do jogo de Damas:
+        List<MovimentoPossivel> possiveis = new LinkedList<>();
+
+        //peças vizinhas
+        //TODO: considerar a situação onde as peças não podem "voltar". Da forma como está implementado, a peça pode fazer um movimento "pra trás"
+        //TODO: incluir a informação do "lado" do tabuleiro, onde a peça está localizada. Pensar: isso é o tabuleiro que informa? (refletir sobre isso)
+        possiveis.add((orig, dest) -> dest.x == orig.x-1 && dest.y == orig.y+1);
+        possiveis.add((orig, dest) -> dest.x == orig.x+1 && dest.y == orig.y+1);
+        possiveis.add((orig, dest) -> dest.x == orig.x-1 && dest.y == orig.y-1);
+        possiveis.add((orig, dest) -> dest.x == orig.x+1 && dest.y == orig.y-1);
+
+        //capturando peças (1 nível)
+        //TODO: melhorar o uso do optional usando ifPresent()
+        //Lógica aqui: o getCasa retorna um Optional "null" caso a coordenada passada esteja fora dos limites do tabuleiro.
+        //isso é necessário para que possamos testar situações onde a coordenada de origem seja na borda do tabuleiro.
+        //Por isso verificamos primeiro se a cada "existe" getCasa(...).isPresent()
+        possiveis.add((orig, dest) -> getCasa(orig.x - 1, orig.y - 1).isPresent() && !getCasa(orig.x - 1, orig.y - 1).get().temPecaMesmaCor(pecaOrigem) && (dest.x == orig.x - 2 && dest.y == orig.y - 2));
+        possiveis.add((orig, dest) -> getCasa(orig.x - 1, orig.y - 1).isPresent() && !getCasa(orig.x - 1, orig.y + 1).get().temPecaMesmaCor(pecaOrigem) && (dest.x == orig.x - 2 && dest.y == orig.y + 2));
+        possiveis.add((orig, dest) -> getCasa(orig.x - 1, orig.y - 1).isPresent() && !getCasa(orig.x + 1, orig.y - 1).get().temPecaMesmaCor(pecaOrigem) && (dest.x == orig.x + 2 && dest.y == orig.y - 2));
+        possiveis.add((orig, dest) -> getCasa(orig.x - 1, orig.y - 1).isPresent() && !getCasa(orig.x + 1, orig.y + 1).get().temPecaMesmaCor(pecaOrigem) && (dest.x == orig.x + 2 && dest.y == orig.y + 2));
+
+        if(possiveis.stream().anyMatch(possivel -> possivel.movimentoValido(origem, destino))){
+            movimentarPeca(origem, destino);
+        }else {
+            throw new MovimentoInvalidoException("Movimento inválido");
+        }
     }
 
     public void movimentarPeca(Posicao origem, Posicao destino){
-        PecaDamas pecaOrigem = getCasa(origem).getPeca();
-        getCasa(destino).setPeca(pecaOrigem);
-        getCasa(origem).removerPeca();
+        PecaDamas pecaOrigem = getCasa(origem).get().getPeca();
+        getCasa(destino).get().setPeca(pecaOrigem);
+        getCasa(origem).get().removerPeca();
 
     }
 

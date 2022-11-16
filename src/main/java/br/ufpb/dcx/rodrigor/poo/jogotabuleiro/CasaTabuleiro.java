@@ -26,6 +26,11 @@ public class CasaTabuleiro {
         return this.peca != null;
     }
 
+    public boolean temPecaMesmaCor(PecaDamas peca){
+        if(!temPeca()) return false;
+        return getPeca().getCor().equals(peca.getCor());
+    }
+
     public void removerPeca() {
         this.peca = null;
     }
